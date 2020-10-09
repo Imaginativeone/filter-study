@@ -20,73 +20,42 @@ in hac. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Nibh torto
 purus non. A arcu cursus vitae congue. Vulputate enim nulla aliquet porttitor. Eu scelerisque felis imperdiet proin fermentum leo vel. Amet purus gravida quis 
 blandit turpis. A diam sollicitudin tempor id eu. Molestie a iaculis at erat pellentesque adipiscing. Scelerisque felis imperdiet proin fermentum leo vel orci-|-`;
 
-const textArray = allText.split('**Data**').join('|**Data**').split('|');
+const textArray = allText.split('**Data**');
+
 textoutput.innerHTML = textArray;
-// // const contents = allText.reduce((acc, val) => {
 
-// //   console.log(val);
+const markers = ['**Data**', '-|-', '!'];
 
-// // });
-// // console.log(contents);
+function appendMarkerToFrontOfArrayElements(txtArray, marker) {
+  const transformation = txtArray.map((txtArrayItem) => {
+    // Transformation
+    txtArrayItem = marker + txtArrayItem;
+    return txtArrayItem;
+  });
+  return transformation;
+}
 
-// const room1Contents = textArray.filter((text) => {
-//   return (text.indexOf('**Data**') !== -1);
-//   const room2Contents = room1Contents.filter((text) => {
-//     return (text.indexOf('-|-') !== -1 && text.indexOf('!') === -1);
-//   });
-// });
+function removeFirstElement(iArray) {
+  const removeFirstElement = iArray.filter((element, i) => {
+    // Filter
+    if (i>0) { return element; } // use a ternary instead
+  });
+  return removeFirstElement;
+}
 
-// const allText; // Acquired from a text source
-// const markers = ['**Data**', '-|-', '!'];
+function showData(data, label, mode) {
 
-// const begText = marker1Text(allText, markers[0]);
-// const endText = marker2Text(begText, markers[1]);
-// const prsText = parseText(endText, markers[2]);
+  if (mode === 'append') {
+    textoutput.innerHTML += `<div style='font-weight:bold'>${ label }</div> ${ data } <br/><br/>`;
+  } else {
+    textoutput.innerHTML = `<div style='font-weight:bold'>${ label }</div> ${ data } <br/><br/>`;
+  }
+}
 
-// function marker1Text(text, marker) {
+const transformedArray = appendMarkerToFrontOfArrayElements(textArray, markers[0]);
+const noFirstElement   = removeFirstElement(transformedArray);
+const newText = noFirstElement.join(markers[0]);
 
-//   // console.log('text', text);
-//   console.log('marker', marker);
-//   textoutput.innerHTML = marker;
-
-//   let textArray = text.split(marker); // Separate into array elements, removing delimiters
-//   console.log('textArray', textArray);
-//   textoutput.innerHTML += '<br/>' + textArray;
-
-//   textArray = textArray.splice(1); // Remove the chaff
-//   console.log('shift', textArray);
-//   textoutput.innerHTML = '<br/>' + textArray;
-
-//   let delimitersBack = textArray.map((arrayItem) => { // Put the delimiters back
-//     return marker + arrayItem;
-//   });
-  
-//   textoutput.innerHTML = delimitersBack;
-
-//   textArray = delimitersBack.join(marker);
-
-//   textoutput.innerHTML = 'Help';
-
-//   console.log(marker + marker);
-//   const mLocation = textArray.indexOf(marker+marker);
-//   console.log(mLocation);
-//   textArray.replace(marker+marker, marker);
-
-//   textoutput.innerHTML = textArray;
-
-//   // console.log(textArray);
-
-//   return (text.indexOf(marker) !== -1) ? text : ''
-// };
-
-// function marker2Text(text, marker) {
-//   return (text.indexOf(marker) !== -1) ? text : ''
-// };
-
-// function parseText(text, marker) {
-//   return (text.indexOf(marker) === -1) ? text : ''
-// };
-
-// console.log('begText', begText);
-// console.log('endText', endText);
-// console.log('prsText', prsText);
+showData(noFirstElement, 'noFirstElement, Convert Array to String');
+showData(newText, 'String, Double Marker Problem', 'append');
+console.log(newText);
