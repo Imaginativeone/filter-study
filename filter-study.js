@@ -20,16 +20,24 @@ in hac. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Nibh torto
 purus non. A arcu cursus vitae congue. Vulputate enim nulla aliquet porttitor. Eu scelerisque felis imperdiet proin fermentum leo vel. Amet purus gravida quis 
 blandit turpis. A diam sollicitudin tempor id eu. Molestie a iaculis at erat pellentesque adipiscing. Scelerisque felis imperdiet proin fermentum leo vel orci-|-`;
 
-const textArray = allText.split('**Data**');
-
-textoutput.innerHTML = textArray;
-
 const markers = ['**Data**', '-|-', '!'];
 
 function appendMarkerToFrontOfArrayElements(txtArray, marker) {
   const transformation = txtArray.map((txtArrayItem) => {
     // Transformation
     txtArrayItem = marker + txtArrayItem;
+    return txtArrayItem;
+  });
+  return transformation;
+}
+
+function removeMarkerFromFrontOfArrayElements(txtArray, marker) {
+  const transformation = txtArray.map((txtArrayItem) => {
+    // Transformation
+    txtArrayItem = txtArrayItem.replace(marker, '');
+
+    console.log(txtArrayItem);
+
     return txtArrayItem;
   });
   return transformation;
@@ -43,6 +51,10 @@ function removeFirstElement(iArray) {
   return removeFirstElement;
 }
 
+function frontJoin(array, delimiter) {
+  return delimiter + array.join(delimiter);
+}
+
 function showData(data, label, mode) {
 
   if (mode === 'append') {
@@ -52,10 +64,14 @@ function showData(data, label, mode) {
   }
 }
 
-const transformedArray = appendMarkerToFrontOfArrayElements(textArray, markers[0]);
-const noFirstElement   = removeFirstElement(transformedArray);
-const newText = noFirstElement.join(markers[0]);
-
-showData(noFirstElement, 'noFirstElement, Convert Array to String');
+const textArray = allText.split('**Data**');
+showData(textArray, "Split the initial array");
+const noFirstElement = removeFirstElement(textArray);
+showData(noFirstElement, 'noFirstElement, Convert Array to String', 'append');
+const removeMarkers = removeMarkerFromFrontOfArrayElements(noFirstElement, markers[0]);
+showData(removeMarkers, 'Removed Markers', 'append');
+const newText = frontJoin(removeMarkers, markers[0]);
 showData(newText, 'String, Double Marker Problem', 'append');
-console.log(newText);
+
+const room2 = newText.split(markers[1]);
+showData(room2, 'Room 2', 'append');
