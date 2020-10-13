@@ -18,42 +18,10 @@ pellentesque elit eget gravida cum sociis natoque. Purus sit amet volutpat conse
 venenatis cras sed felis eget. Egestas diam in arcu cursus. Et netus et malesuada fames ac turpis egestas sed. Ornare suspendisse sed nisi lacus sed viverra tellus 
 in hac. Quam nulla porttitor massa id neque aliquam vestibulum morbi. Nibh tortor id aliquet lectus proin nibh. Lectus magna fringilla urna porttitor rhoncus dolor 
 purus non. A arcu cursus vitae congue. Vulputate enim nulla aliquet porttitor. Eu scelerisque felis imperdiet proin fermentum leo vel. Amet purus gravida quis 
-blandit turpis. A diam sollicitudin tempor id eu. Molestie a iaculis at erat pellentesque adipiscing. Scelerisque felis imperdiet proin fermentum leo vel orci-|-`;
+blandit turpis. A diam sollicitudin tempor id eu. Molestie a iaculis at erat pellentesque adipiscing. Scelerisque felis imperdiet proin 
+fermentum leo vel orci-|-`;
 
 const markers = ['**Data**', '-|-', '!'];
-
-function frontRemoveMarker(txtArray, marker) {
-  const transformation = txtArray.map((txtArrayItem) => {
-    txtArrayItem = txtArrayItem.replace(marker, '');
-    return txtArrayItem;
-  });
-  return transformation;
-}
-
-function removeFirstElement(iArray) {
-  const removeFirstElement = iArray.filter((element, i) => {
-    return i>0;
-  });
-  return removeFirstElement;
-}
-
-function frontJoin(array, delimiter) {
-  return delimiter + array.join(delimiter);
-}
-
-function verifyToggle(text, marker1, marker) {
-  
-  const room2 = text.split(marker1);
-
-  // cycle through array elements
-  // locate exclamation marks inside
-  const parsedText = room2.filter((sortedunit) => {
-    return (sortedunit.indexOf(marker) === -1 && sortedunit.length > 0);
-  });
-
-  console.log(parsedText);
-  return parsedText;
-}
 
 function showData(data, label, mode) {
   if (mode === 'append') {
@@ -63,17 +31,48 @@ function showData(data, label, mode) {
   }
 }
 
-const textArray = allText.split('**Data**');
-showData(textArray, "Split the initial array");
+function marker1Text(text, marker) {
+  const textArray = text.split(marker);
+  const noFirstElement = textArray.filter((element, i) => {
+    return i>0;
+  });
+    // return removeFirstElement;
+  // }
+  
+  return noFirstElement.join();
+}
 
-const noFirstElement = removeFirstElement(textArray);
-showData(noFirstElement, 'noFirstElement, Convert Array to String', 'append');
+function marker2Text(text, marker) {
+  const textArray = text.split(marker);
+  return textArray;
+}
 
-const removeMarkers = frontRemoveMarker(noFirstElement, markers[0]);
-showData(removeMarkers, 'Removed Markers', 'append');
+function parseText(textArray, marker) {
 
-const newText = frontJoin(removeMarkers, markers[0]);
-showData(newText, 'String, Double Marker Problem', 'append');
+  const parsedText = textArray.filter((sortedunit) => {
+    return (sortedunit.indexOf(marker) === -1 && sortedunit.length > 0);
+  });
 
-const room2 = verifyToggle(newText, markers[0], markers[2]);
-showData(room2, 'Room 2', 'append');
+  showData(parsedText, 'verifyToggle', 'append');
+  return parsedText;
+  
+}
+
+const begText = marker1Text(allText, markers[0]);
+const endText = marker2Text(begText, markers[1]);
+const prsText = parseText(endText, markers[2]);
+
+// const textArray = allText.split('**Data**');
+// showData(textArray, "Split the initial array");
+
+// const noFirstElement = removeFirstElement(textArray);
+// showData(noFirstElement, 'noFirstElement, Convert Array to String', 'append');
+
+// const removeMarkers = frontRemoveMarker(noFirstElement, markers[0]);
+// showData(removeMarkers, 'Removed Markers', 'append');
+
+// const newText = frontJoin(removeMarkers, markers[0]);
+// showData(newText, 'String, Double Marker Problem', 'append');
+
+// const room2 = verifyToggle(newText, markers[0], markers[2]);
+// showData(room2, 'Room 2', 'append');
