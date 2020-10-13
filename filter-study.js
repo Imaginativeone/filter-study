@@ -7,7 +7,7 @@ iaculis eu non. Sit amet risus nullam eget felis eget. Ullamcorper velit sed ull
 congue quisque egestas diam. Dui vivamus arcu felis bibendum ut tristique et. Leo integer malesuada nunc vel risus commodo. Sed odio morbi quis commodo odio aenean 
 sed adipiscing diam.**Data**
 In ante metus dictum at tempor. Pellentesque adipiscing commodo elit at imperdiet dui accumsan. Mauris rhoncus aenean vel elit. Ac tortor vitae purus faucibus ornare 
-suspendisse sed nisi lacus. Dui accumsan sit amet nulla facilisi morbi tempus. Fermentum posuere urna nec tincidunt praesent. Quis lectus nulla at volutpat. Ac 
+suspendisse sed nisi lacus. Dui accumsan sit amet nulla facilisi morbi tempus. Fermentum posuere urna nec tincidunt praesent. Quis lectus nulla at volutpat. Ac ! The marker is located here.
 feugiat sed lectus vestibulum mattis. Egestas erat imperdiet sed euismod. Magna ac placerat vestibulum lectus mauris ultrices eros in cursus. Cursus mattis molestie 
 a iaculis at erat pellentesque adipiscing commodo. Mi ipsum faucibus vitae aliquet nec ullamcorper sit amet. Amet cursus sit amet dictum sit. Et malesuada fames ac 
 turpis. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Eu sem integer vitae justo eget magna fermentum iaculis eu. Faucibus vitae aliquet nec 
@@ -22,22 +22,9 @@ blandit turpis. A diam sollicitudin tempor id eu. Molestie a iaculis at erat pel
 
 const markers = ['**Data**', '-|-', '!'];
 
-function appendMarkerToFrontOfArrayElements(txtArray, marker) {
+function frontRemoveMarker(txtArray, marker) {
   const transformation = txtArray.map((txtArrayItem) => {
-    // Transformation
-    txtArrayItem = marker + txtArrayItem;
-    return txtArrayItem;
-  });
-  return transformation;
-}
-
-function removeMarkerFromFrontOfArrayElements(txtArray, marker) {
-  const transformation = txtArray.map((txtArrayItem) => {
-    // Transformation
     txtArrayItem = txtArrayItem.replace(marker, '');
-
-    console.log(txtArrayItem);
-
     return txtArrayItem;
   });
   return transformation;
@@ -45,8 +32,7 @@ function removeMarkerFromFrontOfArrayElements(txtArray, marker) {
 
 function removeFirstElement(iArray) {
   const removeFirstElement = iArray.filter((element, i) => {
-    // Filter
-    if (i>0) { return element; } // use a ternary instead
+    return i>0;
   });
   return removeFirstElement;
 }
@@ -55,8 +41,21 @@ function frontJoin(array, delimiter) {
   return delimiter + array.join(delimiter);
 }
 
-function showData(data, label, mode) {
+function verifyToggle(text, marker1, marker) {
+  
+  const room2 = text.split(marker1);
 
+  // cycle through array elements
+  // locate exclamation marks inside
+  const parsedText = room2.filter((sortedunit) => {
+    return (sortedunit.indexOf(marker) === -1 && sortedunit.length > 0);
+  });
+
+  console.log(parsedText);
+  return parsedText;
+}
+
+function showData(data, label, mode) {
   if (mode === 'append') {
     textoutput.innerHTML += `<div style='font-weight:bold'>${ label }</div> ${ data } <br/><br/>`;
   } else {
@@ -66,12 +65,15 @@ function showData(data, label, mode) {
 
 const textArray = allText.split('**Data**');
 showData(textArray, "Split the initial array");
+
 const noFirstElement = removeFirstElement(textArray);
 showData(noFirstElement, 'noFirstElement, Convert Array to String', 'append');
-const removeMarkers = removeMarkerFromFrontOfArrayElements(noFirstElement, markers[0]);
+
+const removeMarkers = frontRemoveMarker(noFirstElement, markers[0]);
 showData(removeMarkers, 'Removed Markers', 'append');
+
 const newText = frontJoin(removeMarkers, markers[0]);
 showData(newText, 'String, Double Marker Problem', 'append');
 
-const room2 = newText.split(markers[1]);
+const room2 = verifyToggle(newText, markers[0], markers[2]);
 showData(room2, 'Room 2', 'append');
