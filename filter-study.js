@@ -36,8 +36,6 @@ function marker1Text(text, marker) {
   const noFirstElement = textArray.filter((element, i) => {
     return i>0;
   });
-    // return removeFirstElement;
-  // }
   
   return noFirstElement.join();
 }
@@ -61,18 +59,3 @@ function parseText(textArray, marker) {
 const begText = marker1Text(allText, markers[0]);
 const endText = marker2Text(begText, markers[1]);
 const prsText = parseText(endText, markers[2]);
-
-// const textArray = allText.split('**Data**');
-// showData(textArray, "Split the initial array");
-
-// const noFirstElement = removeFirstElement(textArray);
-// showData(noFirstElement, 'noFirstElement, Convert Array to String', 'append');
-
-// const removeMarkers = frontRemoveMarker(noFirstElement, markers[0]);
-// showData(removeMarkers, 'Removed Markers', 'append');
-
-// const newText = frontJoin(removeMarkers, markers[0]);
-// showData(newText, 'String, Double Marker Problem', 'append');
-
-// const room2 = verifyToggle(newText, markers[0], markers[2]);
-// showData(room2, 'Room 2', 'append');
